@@ -1,0 +1,37 @@
+<header>
+  <img src="/assets/logo.svg" alt="UK Parliament logo" />
+  <h1>
+    <strong>
+      People management 
+    </strong>
+  </h1>
+</header>
+
+<p>{{ message }}</p>
+
+<div *ngIf="person">
+  <h2>Person Details</h2>
+  <p>First Name: {{ person.firstName }}</p>
+  <p>Last Name: {{ person.lastName }}</p>
+</div>
+
+<div *ngIf="people && people.length > 0">
+  <h2>All People</h2>
+  <table>
+    <tr *ngFor="let person of people">
+      <td>
+        First Name: {{ person.firstName }}
+      </td>
+      <td>
+        Last Name: {{ person.lastName }}
+      </td>
+      <td>
+        Edit | Delete 
+      </td>
+    </tr>
+  </table>
+</div>
+<div *ngIf="people && people.length === 0">
+  <p>No people found.</p>
+</div>
+
