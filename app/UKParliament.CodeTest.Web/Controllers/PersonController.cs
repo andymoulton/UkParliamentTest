@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Mvc;
 using UKParliament.CodeTest.Data;
-using UKParliament.CodeTest.Web.ViewModels;
+using UKParliament.CodeTest.Services;
+using UKParliament.CodeTest.ViewModels;
+//using UKParliament.CodeTest.Web.ViewModels;
 
 namespace UKParliament.CodeTest.Web.Controllers;
 
@@ -20,18 +23,25 @@ public class PersonController : ControllerBase
     public ActionResult<PersonViewModel> GetById(int id)
     {
 
-        var person = _context.People.Find(id);
-        if (person == null)
-            return NotFound();
-
-        var viewModel = new PersonViewModel
+        try
         {
-            FirstName = person.FirstName,
-            LastName = person.LastName
-        };
+            var person = new PersonService(_context).getById(id);
+            if (person == null)
+                return NotFound();
 
-        //return Ok(new PersonViewModel());
-        return Ok(viewModel);
+            //var viewModel = new PersonViewModel
+            //{
+            //    FirstName = person.FirstName,
+            //    LastName = person.LastName
+            //};
+
+            return Ok(new MappingService().MapToViewModel(person));
+
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [Route("all")]
@@ -39,15 +49,31 @@ public class PersonController : ControllerBase
     public ActionResult<IEnumerable<PersonViewModel>> GetAll()
     {
 
-        var people = _context.People
-        .Select(person => new PersonViewModel
+        try
         {
-            FirstName = person.FirstName,
-            LastName = person.LastName
-        })
-        .ToList();
+            var people = new PersonService(_context).getAll();
+            return Ok(people);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
 
-        return Ok(people);
+    }
+
+    [HttpPost]
+    public ActionResult<IEnumerable<PersonViewModel>> Save(PersonViewModel person)
+    {
+
+        try
+        {
+            new PersonService(_context).Save(new Person { FirstName = person.FirstName, LastName = person.LastName });
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
 
     }
 
