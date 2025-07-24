@@ -29,12 +29,6 @@ public class PersonController : ControllerBase
             if (person == null)
                 return NotFound();
 
-            //var viewModel = new PersonViewModel
-            //{
-            //    FirstName = person.FirstName,
-            //    LastName = person.LastName
-            //};
-
             return Ok(new MappingService().MapToViewModel(person));
 
         }
@@ -67,8 +61,17 @@ public class PersonController : ControllerBase
 
         try
         {
-            new PersonService(_context).Save(new Person { FirstName = person.FirstName, LastName = person.LastName });
+
+            var errors = new ValidatePersonService(new MappingService().MapToEntity(person)).ValidatePerson();
+
+            if (errors.Any())
+            {
+                return BadRequest(string.Join(",", errors));
+            }
+
+            new PersonService(_context).Save(new Person { FirstName = person.FirstName, LastName = person.LastName, DateOfBirth = person.DateOfBirth, DepartmentId = person.DepartmentId, DepartmentName = person.DepartmentName });
             return Ok();
+
         }
         catch (Exception ex)
         {

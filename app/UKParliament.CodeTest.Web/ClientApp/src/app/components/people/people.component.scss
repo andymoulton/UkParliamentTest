@@ -1,0 +1,45 @@
+
+header {
+  margin-bottom: 1.3rem;
+  text-align: center;
+  background-color: #373151;
+  color: white;
+
+  img {
+    width: 200px;
+    display: inline-block;
+    margin-bottom: 15px;
+    background-color: white;
+
+    @media (min-width: 700px) {
+      width: 250px;
+      margin-bottom: 35px;
+    }
+  }
+
+  img.members {
+    float: right;
+  }
+}
+
+button {
+  background: none;
+  border: none;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  outline: none;
+}
+
+table {
+  tbody {
+    td.group {
+      font-weight: bold;
+    }
+  }
+}
+
+.mat-header-cell {
+  font-weight: bold;
+}

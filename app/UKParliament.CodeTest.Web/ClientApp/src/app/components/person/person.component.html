@@ -9,7 +9,7 @@
       <form>
         <label>First name: <input [(ngModel)]="editedPerson.firstName" name="firstName" /></label><br />
         <label>Last name: <input [(ngModel)]="editedPerson.lastName" name="lastName" /></label><br />
-        <label>Date of Birth: <input [(ngModel)]="editedPerson.dateOfBirth" name="dateOfBirth" /></label><br />
+        <label>Date of Birth: <input type="date" [(ngModel)]="editedPerson.dateOfBirth" name="dateOfBirth" /></label><br />
         <label>
           Department:
           <select [(ngModel)]="editedPerson.departmentId" name="department">

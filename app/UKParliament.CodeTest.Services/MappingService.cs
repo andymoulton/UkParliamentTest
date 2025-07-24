@@ -11,32 +11,40 @@ namespace UKParliament.CodeTest.Services
     public class MappingService : IMappingService
     {
 
-        public MappingService() { }
+        //readonly IPerson _person;
+        //readonly IPersonViewModel _personViewModel;
 
-        public PersonViewModel MapToViewModel(Person person)
+        //public MappingService(IPerson person = null, IPersonViewModel personViewModel = null)
+        //{
+        //    _person = person; // ?? throw new ArgumentNullException(nameof(person));
+        //    _personViewModel = personViewModel; // ?? throw new ArgumentNullException(nameof(personViewModel));
+        //}
+
+        public PersonViewModel MapToViewModel(Person _person)
         {
-            if (person == null) return null;
+            if (_person == null) throw new ArgumentNullException(nameof(_person));
 
             return new PersonViewModel
             {
-                FirstName = person.FirstName,
-                LastName = person.LastName,
-                DateOfBirth = person.DateOfBirth,
-                DepartmentId = person.DepartmentId
+                FirstName = _person.FirstName,
+                LastName = _person.LastName,
+                DateOfBirth = _person.DateOfBirth,
+                DepartmentId = _person.DepartmentId,
+                DepartmentName = _person.DepartmentName
             };
 
         }
 
-        public Person MapToEntity(PersonViewModel viewModel)
+        public Person MapToEntity(PersonViewModel _personViewModel)
         {
-            if (viewModel == null) return null;
+            if (_personViewModel == null) throw new ArgumentNullException(nameof(_personViewModel));
 
             return new Person
             {
-                FirstName = viewModel.FirstName,
-                LastName = viewModel.LastName,
-                DateOfBirth = viewModel.DateOfBirth,
-                DepartmentId = viewModel.DepartmentId 
+                FirstName = _personViewModel.FirstName,
+                LastName = _personViewModel.LastName,
+                DateOfBirth = _personViewModel.DateOfBirth,
+                DepartmentId = _personViewModel.DepartmentId
             };
         }
     }

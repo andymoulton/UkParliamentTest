@@ -5,5 +5,6 @@ export interface PersonViewModel {
   email: string;
   dateOfBirth: Date;
   departmentId: number;
+  departmentName: string;
   managerId: number;
 }

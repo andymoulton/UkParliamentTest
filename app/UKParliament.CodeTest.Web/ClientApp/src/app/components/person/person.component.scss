@@ -25,3 +25,13 @@
   justify-content: flex-end;
   gap: 10px;
 }
+
+button {
+  background: none;
+  border: none;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  outline: none;
+}

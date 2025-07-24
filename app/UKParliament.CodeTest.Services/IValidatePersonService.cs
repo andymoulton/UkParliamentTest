@@ -9,6 +9,6 @@ namespace UKParliament.CodeTest.Services
 {
     internal interface IValidatePersonService
     {
-        public List<string> ValidatePerson(Person person);
+        public List<string> ValidatePerson();
     }
 }

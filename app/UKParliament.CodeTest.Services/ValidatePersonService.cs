@@ -7,26 +7,33 @@ using UKParliament.CodeTest.Data;
 
 namespace UKParliament.CodeTest.Services
 {
-    internal class ValidatePersonService : IValidatePersonService
+    public class ValidatePersonService : IValidatePersonService
     {
 
-        public List<string> ValidatePerson(Person person)
+        readonly IPerson _person;
+
+        public ValidatePersonService(IPerson person)
+        {
+            _person = person ?? throw new ArgumentNullException(nameof(person));
+        }
+
+        public List<string> ValidatePerson()
         {
             var errors = new List<string>();
 
-            if (string.IsNullOrWhiteSpace(person.FirstName))
+            if (string.IsNullOrWhiteSpace(_person.FirstName))
                 errors.Add("First name is required.");
 
-            if (string.IsNullOrWhiteSpace(person.LastName))
+            if (string.IsNullOrWhiteSpace(_person.LastName))
                 errors.Add("Last name is required.");
 
-            if (string.IsNullOrWhiteSpace(person.Email) || !person.Email.Contains("@"))
-                errors.Add("A valid email is required.");
+            //if (string.IsNullOrWhiteSpace(_person.Email) || !_person.Email.Contains("@"))
+            //    errors.Add("A valid email is required.");
 
-            if (person.DateOfBirth == default)
+            if (_person.DateOfBirth == default)
                 errors.Add("Date of birth is required.");
 
-            if (person.DepartmentId == 0)
+            if (_person.DepartmentId == 0)
                 errors.Add("Department is required.");
 
             // Add more rules as needed

@@ -33,7 +33,8 @@ public class PersonService : IPersonService
            DateOfBirth = person.DateOfBirth,
            Id = person.Id,
            Email = person.Email,
-           DepartmentId = person.DepartmentId
+           DepartmentId = person.DepartmentId,
+           DepartmentName = GetDepartmentName(person.DepartmentId)
         })
         .ToList();
         return people;
@@ -57,6 +58,13 @@ public class PersonService : IPersonService
         People.Remove(person);
         _context.SaveChanges();
     }
+
+    public string? GetDepartmentName(int departmentId)
+    {
+        var department = _context.Set<Department>().Find(departmentId);
+        return department?.Name;
+    }
+
 
     // Implement methods to interact with the PersonManagerContext
     // For example, methods to get a person by ID, get all persons, etc.

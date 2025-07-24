@@ -18,4 +18,8 @@ export class PersonService {
     return this.http.get<PersonViewModel[]>(this.baseUrl + `api/person/all`)
   }
 
+  save(person: PersonViewModel): Observable<PersonViewModel> {
+    return this.http.post<PersonViewModel>(this.baseUrl + 'api/person', person);
+  }
+
 }
