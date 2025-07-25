@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UKParliament.CodeTest.Data;
 using UKParliament.CodeTest.Services;
 using Xunit;
@@ -12,16 +8,16 @@ namespace UKParliament.CodeTest.Tests
 {
     public class PersonServiceTest
     {
-        private DbContextOptions<PersonManagerContext> GetOptions()
+        private DbContextOptions<PersonManagerContext> GetOptions(string dbName)
         {
             return new DbContextOptionsBuilder<PersonManagerContext>()
-                .UseInMemoryDatabase(databaseName: "PersonServiceTestDb")
+                .UseInMemoryDatabase(databaseName: dbName)
                 .Options;
         }
 
-        private PersonManagerContext SeedContext()
+        private PersonManagerContext SeedContext(string dbName)
         {
-            var options = GetOptions();
+            var options = GetOptions(dbName);
             var context = new PersonManagerContext(options);
 
             context.Departments.Add(new Department { Id = 1, Name = "Sales" });
@@ -44,7 +40,8 @@ namespace UKParliament.CodeTest.Tests
         [Fact]
         public void GetById_ReturnsPerson_WhenExists()
         {
-            using var context = SeedContext();
+            var dbName = Guid.NewGuid().ToString();
+            using var context = SeedContext(dbName);
             var service = new PersonService(context);
 
             var person = service.getById(1);
@@ -57,7 +54,8 @@ namespace UKParliament.CodeTest.Tests
         [Fact]
         public void GetById_ReturnsNull_WhenNotExists()
         {
-            using var context = SeedContext();
+            var dbName = Guid.NewGuid().ToString();
+            using var context = SeedContext(dbName);
             var service = new PersonService(context);
 
             var person = service.getById(999);
@@ -68,7 +66,8 @@ namespace UKParliament.CodeTest.Tests
         [Fact]
         public void GetAll_ReturnsAllPeople()
         {
-            using var context = SeedContext();
+            var dbName = Guid.NewGuid().ToString();
+            using var context = SeedContext(dbName);
             var service = new PersonService(context);
 
             var people = service.getAll();
@@ -80,7 +79,8 @@ namespace UKParliament.CodeTest.Tests
         [Fact]
         public void Save_AddsNewPerson()
         {
-            using var context = SeedContext();
+            var dbName = Guid.NewGuid().ToString();
+            using var context = SeedContext(dbName);
             var service = new PersonService(context);
 
             var newPerson = new Person
@@ -102,7 +102,8 @@ namespace UKParliament.CodeTest.Tests
         [Fact]
         public void Delete_RemovesPerson()
         {
-            using var context = SeedContext();
+            var dbName = Guid.NewGuid().ToString();
+            using var context = SeedContext(dbName);
             var service = new PersonService(context);
 
             var person = service.getById(1);

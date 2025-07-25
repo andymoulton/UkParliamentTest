@@ -87,6 +87,13 @@ mat-sort-header-content {
     padding-bottom: 5px;
 }
 
+.mat-column-id {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  text-align: center;
+}
+
 span.error {
   background-color: maroon;
   color: white;
@@ -97,4 +104,44 @@ span.error {
   top: 20px;
   left: 20px;
   z-index: 2000;
+}
+
+span.message {
+  background-color: darkolivegreen;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  max-width: 400px;
+  min-height: 100px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2000;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Control Panel 
+#controlPanel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0px;
+}
+
+#controlPanel input {
+  flex: 1 1 auto;
+  max-width: 300px;
+  margin-bottom: 0;
+  position: relative; // !
+  top:10px;
+}
+
+#controlPanel button {
+  margin-left: 16px;
+  margin-bottom: 0;
+  position: relative; // !
+  top: 5px;
 }

@@ -25,11 +25,13 @@ export class PeopleComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   error: string = '';
+  message: string = '';
   person?: PersonViewModel;
   people: PersonViewModel[] = [];
   departments: DepartmentViewModel[] = [];
   personBeingEdited: any = null;
   displayedColumns: string[] = [
+    'id',
     'firstName',
     'lastName',
     'dateOfBirth',
@@ -79,7 +81,7 @@ export class PeopleComponent {
       firstName: '',
       lastName: '',
       email: '',
-      dateOfBirth: '',
+      dateOfBirth: '2000-01-01',
       departmentId: undefined
     } as unknown;
   }
@@ -126,17 +128,20 @@ export class PeopleComponent {
       next: (result) => {
         const index = this.dataSource.data.findIndex(p => p.id === updatedPerson.id);
         if (index !== -1) {
-          updatedPerson.departmentName = this.departments.find(d => d.id === updatedPerson.departmentId)?.name || '';
           this.dataSource.data[index] = updatedPerson;
+          updatedPerson.departmentName = this.departments.find(d => d.id === updatedPerson.departmentId)?.name || '';
         }
         else {
+          updatedPerson.id = Math.max(...this.dataSource.data.map(p => p.id), 0) + 1; // get the next id
+          updatedPerson.departmentName = this.departments.find(d => d.id === updatedPerson.departmentId)?.name || '';
           this.dataSource.data.push(updatedPerson);
         }
         this.dataSource.data = [...this.dataSource.data]; // trigger change in mat-table
         this.personBeingEdited = null;
         this.error = '';
+        this.showMessage('Employee details have been updated successfully.');
       },
-      error: (e) => { this.error = `Error: ${e.error}`; }
+      error: (e) => { this.error = `Error: ${e.error}`; this.message = ''; }
     });
 
   }
@@ -144,4 +149,19 @@ export class PeopleComponent {
   closeError() {
     this.error = '';
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  private showMessage(msg: string) {
+    this.message = msg;
+    setTimeout(() => {
+      this.message = '';
+    }, 3000);
+  }
+
 }
+
+

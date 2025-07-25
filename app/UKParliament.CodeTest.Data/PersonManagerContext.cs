@@ -32,7 +32,7 @@ public class PersonManagerContext : DbContext
         for (int i =1; i <= 100; i++)
         {
             modelBuilder.Entity<Person>().HasData(
-                new Person { Id = i, FirstName = FirstNames[random.Next(FirstNames.Length)], LastName = LastNames[random.Next(LastNames.Length)], DepartmentId = random.Next(1,4), DateOfBirth = today.AddYears(-random.Next(18,50)) }
+                new Person { Id = i, FirstName = FirstNames[random.Next(FirstNames.Length)], LastName = LastNames[random.Next(LastNames.Length)], DepartmentId = random.Next(1, 4), DateOfBirth = DateOnly.FromDateTime(DateTime.Today.AddYears(-random.Next(18, 61))) }
             );
         }
 
