@@ -14,6 +14,10 @@ import { ViewChild } from '@angular/core';
   styleUrls: ['./people.component.scss']
 })
 
+/* This component is responsible for displaying a list of people, allowing for editing and deleting of person records.
+    It uses Angular Material components for the table, paginator, and sort functionality.
+*/
+
 export class PeopleComponent {
 
   dataSource = new MatTableDataSource<PersonViewModel>([]);
@@ -41,11 +45,13 @@ export class PeopleComponent {
     this.getAllDepartments();
   }
 
+  // Lifecycle hook to set up the data source after the view has been initialized
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
+  // Method to get a person by ID
   getPersonById(id: number): void {
     this.personService.getById(id).subscribe({
       next: (result) => {
@@ -55,6 +61,7 @@ export class PeopleComponent {
     });
   }
 
+  // Method to get all people
   getAllPeople(): void {
     this.personService.getAll().subscribe({
       next: (result) => {
@@ -65,6 +72,7 @@ export class PeopleComponent {
     });
   }
 
+  // Method to set edited person as a new instance. This will cause the modal dialog to appear with blank fields.
   addPerson() {
     this.personBeingEdited = {
       id: -1,
@@ -76,10 +84,12 @@ export class PeopleComponent {
     } as unknown;
   }
 
+  // Method to edit a person (initiates editing mode). This will cause the modal dialog to appear with blank fields.
   editPerson(person: any) {
     this.personBeingEdited = person;
   }
 
+  // Method to delete a person
   deletePerson(person: any) {
     const confirmed = confirm(`Are you sure you want to delete ${person.firstName} ${person.lastName}?`);
     if (!confirmed) {
@@ -89,6 +99,7 @@ export class PeopleComponent {
     this.dataSource.data = [...this.dataSource.data];
   }
    
+  // Method to get all departments
   getAllDepartments(): void {
     this.departmentService.getAll().subscribe({
       next: (result) => {
@@ -98,10 +109,12 @@ export class PeopleComponent {
     });
   }
 
+  // Method to cancel editing a person
   cancelEdit() {
     this.personBeingEdited = null;
   }
 
+  // Method to save the edited person. Validation is done server side, an exception is raise if there are issues.
   savePerson(updatedPerson: any) {
     
     if (!updatedPerson || !updatedPerson.id) {
@@ -121,11 +134,14 @@ export class PeopleComponent {
         }
         this.dataSource.data = [...this.dataSource.data]; // trigger change in mat-table
         this.personBeingEdited = null;
+        this.error = '';
       },
       error: (e) => { this.error = `Error: ${e.error}`; }
     });
 
   }
 
-
+  closeError() {
+    this.error = '';
+  }
 }

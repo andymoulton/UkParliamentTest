@@ -2,18 +2,20 @@
 
 namespace UKParliament.CodeTest.Data;
 
+/*
+ * PersonManagerContext class representing the database context for managing persons and departments.
+ */
+
 public class PersonManagerContext : DbContext
 {
     public PersonManagerContext(DbContextOptions<PersonManagerContext> options) : base(options)
     {
-
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
         var random = new Random();
-        int daysInFiftyYears = 50 * 365;
         DateOnly today = DateOnly.FromDateTime(DateTime.Today.AddYears(-50));
 
         base.OnModelCreating(modelBuilder);
@@ -30,27 +32,14 @@ public class PersonManagerContext : DbContext
         for (int i =1; i <= 100; i++)
         {
             modelBuilder.Entity<Person>().HasData(
-                new Person { Id = i, FirstName = FirstNames[random.Next(FirstNames.Length)], LastName = LastNames[random.Next(LastNames.Length)], DepartmentId = random.Next(1,4), DateOfBirth = today.AddDays(random.Next(daysInFiftyYears)) }
+                new Person { Id = i, FirstName = FirstNames[random.Next(FirstNames.Length)], LastName = LastNames[random.Next(LastNames.Length)], DepartmentId = random.Next(1,4), DateOfBirth = today.AddYears(-random.Next(18,50)) }
             );
         }
-
-        //modelBuilder.Entity<Person>().HasData(
-        //    new Person { Id = 1, FirstName = "Andy", LastName = "One", DepartmentId = 1, DateOfBirth = new DateOnly(1995, 12, 3) },
-        //    new Person { Id = 2, FirstName = "Duncan", LastName = "Two", DepartmentId = 2, DateOfBirth = new DateOnly(1995, 12, 3) },
-        //    new Person { Id = 3, FirstName = "Sarah", LastName = "Three", DepartmentId = 3, DateOfBirth = new DateOnly(1995, 12, 3) },
-        //    new Person { Id = 4, FirstName = "Peter", LastName = "Four", DepartmentId = 4, DateOfBirth = new DateOnly(1995, 12, 3) },
-        //    new Person { Id = 5, FirstName = "Claire", LastName = "Five", DepartmentId = 1, DateOfBirth = new DateOnly(1995, 12, 3) },
-        //    new Person { Id = 6, FirstName = "Katia", LastName = "Six", DepartmentId = 2, DateOfBirth = new DateOnly(1995, 12, 3) },
-        //    new Person { Id = 7, FirstName = "Ronnie", LastName = "Seven", DepartmentId = 3, DateOfBirth = new DateOnly(1995, 12, 3) },
-        //    new Person { Id = 8, FirstName = "Laura", LastName = "Either", DepartmentId = 4, DateOfBirth = new DateOnly(1995, 12, 3) }
-        //);
 
     }
 
     public DbSet<Person> People { get; set; }
 
     public DbSet<Department> Departments { get; set; }
-
-    //public DbSet<Address> Addresses { get; set; }
 
 }

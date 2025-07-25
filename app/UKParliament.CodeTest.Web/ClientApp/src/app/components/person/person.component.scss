@@ -35,3 +35,22 @@ button {
   padding: 0.5em 1em;
   outline: none;
 }
+
+form label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+form button,
+form select,
+form input {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}

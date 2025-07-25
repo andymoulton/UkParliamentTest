@@ -3,10 +3,14 @@ using UKParliament.CodeTest.Data;
 
 namespace UKParliament.CodeTest.Services;
 
+/*
+ * This service is called from the PersonController in the web project. 
+ * The DB context is passed in from the web project, which allows for easier testing and separation of concerns.
+ */
+
 public class PersonService : IPersonService
 {
 
-    //private readonly PersonManagerContext _context;
     private readonly DbContext _context;
 
     public PersonService(DbContext context)
@@ -17,12 +21,17 @@ public class PersonService : IPersonService
     protected DbSet<Person> People => (_context as PersonManagerContext)?.People
                                          ?? _context.Set<Person>();
 
+    protected DbSet<Department> Departments => (_context as PersonManagerContext)?.Departments
+                                 ?? _context.Set<Department>();
+
+    // Returns a person by ID, or null if not found
     public Person getById(int id)
     {
         var person = People.Find(id);
         return person; // Returns null if not found
     }
 
+    // Returns a list of all persons with their department names
     public List<Person> getAll()
     {
         var people = People
@@ -40,6 +49,21 @@ public class PersonService : IPersonService
         return people;
     }
 
+    // Returns a list of all departments
+    public List<Department> getAllDepartments()
+    {
+        var departments = Departments
+           .Select(dept => new Department
+           {
+               Id = dept.Id,
+               Name = dept.Name
+           })
+           .ToList();
+        return departments;
+
+    }
+
+    // Saves a person to the database. If the person has an Id of 0, it is treated as a new person.
     public void Save(Person person)
     {
         if (person.Id == 0)
@@ -53,19 +77,18 @@ public class PersonService : IPersonService
         _context.SaveChanges();
     }
 
+    // Deletes a person from the database
     public void Delete(Person person)
     {
         People.Remove(person);
         _context.SaveChanges();
     }
 
+    // Gets the name of the department by its ID
     public string? GetDepartmentName(int departmentId)
     {
         var department = _context.Set<Department>().Find(departmentId);
         return department?.Name;
     }
 
-
-    // Implement methods to interact with the PersonManagerContext
-    // For example, methods to get a person by ID, get all persons, etc.
 }

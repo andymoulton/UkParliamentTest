@@ -55,6 +55,23 @@ public class PersonController : ControllerBase
 
     }
 
+    [Route("allDepartments")]
+    [HttpGet]
+    public ActionResult<IEnumerable<PersonViewModel>> GetAllDepartments()
+    {
+
+        try
+        {
+            var people = new PersonService(_context).getAllDepartments();
+            return Ok(people);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
     [HttpPost]
     public ActionResult<IEnumerable<PersonViewModel>> Save(PersonViewModel person)
     {

@@ -9,6 +9,8 @@ import { DepartmentViewModel } from '../../models/department-view-model';
   styleUrl: './person.component.scss'
 })
 
+/* This component is responsible for displaying and editing a person's details.
+*/ 
 export class PersonComponent implements OnChanges {
 
   @Input() person!: PersonViewModel;
@@ -18,30 +20,19 @@ export class PersonComponent implements OnChanges {
 
   editedPerson: any = {};
 
+  // Form group for the person edit form
   ngOnChanges(changes: SimpleChanges) {
     if (changes['person'] && changes['person'].currentValue) {
       this.editedPerson = { ...changes['person'].currentValue };
     }
   }
 
-  //ngOnInit() {
-  //  this.personForm = this.fb.group({
-  //    id: [null],
-  //    name: ['', [Validators.required, Validators.minLength(2)]],
-  //    email: ['', [Validators.required, Validators.email]],
-  //    age: [null, [Validators.min(0), Validators.max(150)]],
-  //  });
-  //}
-
-  //ngOnChanges() {
-  //  // Clone to avoid mutating original object directly
-  //  this.editedPerson = { ...this.person };
-  //}
-
+  // Form controls for the person edit form. Event sent back to parent (people control) which will initate the validate/save
   onSave() {
     this.save.emit(this.editedPerson);
   }
 
+  // Event sent back to parent (people control) which will close the edit form
   onCancel() {
     this.cancel.emit();
   }

@@ -8,18 +8,13 @@ using UKParliament.CodeTest.ViewModels;
 
 namespace UKParliament.CodeTest.Services
 {
+    /* This service is responsible for mapping between the Person entity and the PersonViewModel.
+    */
+
     public class MappingService : IMappingService
     {
 
-        //readonly IPerson _person;
-        //readonly IPersonViewModel _personViewModel;
-
-        //public MappingService(IPerson person = null, IPersonViewModel personViewModel = null)
-        //{
-        //    _person = person; // ?? throw new ArgumentNullException(nameof(person));
-        //    _personViewModel = personViewModel; // ?? throw new ArgumentNullException(nameof(personViewModel));
-        //}
-
+        // Maps a Person entity to a PersonViewModel.
         public PersonViewModel MapToViewModel(Person _person)
         {
             if (_person == null) throw new ArgumentNullException(nameof(_person));
@@ -35,6 +30,7 @@ namespace UKParliament.CodeTest.Services
 
         }
 
+        // Maps a PersonViewModel to a Person entity.
         public Person MapToEntity(PersonViewModel _personViewModel)
         {
             if (_personViewModel == null) throw new ArgumentNullException(nameof(_personViewModel));

@@ -10,8 +10,12 @@ body {
   background-color: #ebe9e8;
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h4, h5 {
   color: $colour-white;
+}
+
+h3 {
+  color: $colour-purple;
 }
 
 strong.highlight {
@@ -33,4 +37,19 @@ table {
     .table {
         min-width: 600px;
     }
+}
+
+th.mat-header-cell,
+.mat-header-row th,
+.mat-header-cell .mat-sort-header-content, .mat-sort-header-content, mat-mdc-header-cell {
+  font-weight: bold !important;
+  margin-bottom: 5px;
+  vertical-align: central;
+}
+
+th.mat-header-cell .mat-sort-header-content,
+.mat-header-cell .mat-sort-header-content, .mat-sort-header-content, mat-mdc-header-cell {
+  font-weight: bold !important;
+  margin-bottom: 5px;
+  vertical-align: central;
 }

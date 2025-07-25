@@ -8,6 +8,12 @@ using UKParliament.CodeTest.Data;
 
 namespace UKParliament.CodeTest.Services
 {
+
+    /*
+     * This service is called from the DepartmewntController in the web project. 
+     * The DB context is passed in from the web project, which allows for easier testing and separation of concerns.
+     */
+
     public class DepartmentService : IDepartmentService
     {
 
@@ -18,9 +24,10 @@ namespace UKParliament.CodeTest.Services
             _context = context;
         }
 
-        protected DbSet<Department> Departments => (_context as DepartmentManagerContext)?.Departments
+        protected DbSet<Department> Departments => (_context as PersonManagerContext)?.Departments
                                          ?? _context.Set<Department>();
 
+        // Returns all departments
         public List<Department> GetAll()
         {
             var departments = Departments

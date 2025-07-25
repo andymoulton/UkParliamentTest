@@ -15,7 +15,7 @@ public class Program
         builder.Services.AddControllersWithViews();
 
         builder.Services.AddDbContext<PersonManagerContext>(op => op.UseInMemoryDatabase("PersonManager"));
-        builder.Services.AddDbContext<DepartmentManagerContext>(op => op.UseInMemoryDatabase("DepartmentManager"));
+        //builder.Services.AddDbContext<DepartmentManagerContext>(op => op.UseInMemoryDatabase("DepartmentManager"));
 
         builder.Services.AddScoped<DbContext>(provider => provider.GetRequiredService<PersonManagerContext>());
         builder.Services.AddScoped<IPersonService, PersonService>();
@@ -29,8 +29,8 @@ public class Program
             using var context = serviceScope.ServiceProvider.GetRequiredService<PersonManagerContext>();
             context.Database.EnsureCreated();
             
-            using var departmentContext = serviceScope.ServiceProvider.GetRequiredService<DepartmentManagerContext>();
-            departmentContext.Database.EnsureCreated();
+            //using var departmentContext = serviceScope.ServiceProvider.GetRequiredService<DepartmentManagerContext>();
+            //departmentContext.Database.EnsureCreated();
         }
 
         // Configure the HTTP request pipeline.
